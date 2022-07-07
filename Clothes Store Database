@@ -1,0 +1,80 @@
+/** All Tables contain (ID, Description, Color, Price, Quantity, Aisle)**/ 
+
+CREATE TABLE Short_Sleeve (ID INTEGER PRIMARY KEY, Description TEXT, Color TEXT, Price INTEGER, Quantity INTEGER, Aisle INTEGER);
+
+INSERT INTO Short_Sleeve VALUES (1, "Men's", "Green", 5.99, 17, 1);
+INSERT INTO Short_Sleeve VALUES (2, "Men's", "Blue", 5.99, 13, 1);
+INSERT INTO Short_Sleeve VALUES (3, "Men's", "Black", 5.99, 6, 1);
+INSERT INTO Short_Sleeve VALUES (4, "Women's", "Pink", 5.99, 15, 3);
+INSERT INTO Short_Sleeve VALUES (5, "Women's", "Black", 5.99, 12, 3);
+INSERT INTO Short_Sleeve VALUES (6, "Women's", "Purple", 5.99, 9, 3);
+
+CREATE TABLE Long_Sleeve (ID INTEGER PRIMARY KEY, Description TEXT, Color TEXT, Price INTEGER, Quantity INTEGER, Aisle INTEGER);
+
+INSERT INTO Long_Sleeve VALUES (1, "Men's", "Grey", 7.99, 23, 1);
+INSERT INTO Long_Sleeve VALUES (2, "Men's", "Red", 7.99, 11, 1);
+INSERT INTO Long_Sleeve VALUES (3, "Men's", "White", 7.99, 4, 1);
+INSERT INTO Long_Sleeve VALUES (4, "Women's", "Blue", 7.99, 5, 3);
+INSERT INTO Long_Sleeve VALUES (5, "Women's", "Grey", 7.99, 17, 3);
+INSERT INTO Long_Sleeve VALUES (6, "Women's", "Yellow", 7.99, 19, 3);
+
+CREATE TABLE Pants (ID INTEGER PRIMARY KEY, Description TEXT, Color TEXT, Price INTEGER, Quantity INTEGER, Aisle INTEGER);
+
+INSERT INTO Pants VALUES (1, "Men's Jeans", "Dark Blue", 15.99, 21, 2);
+INSERT INTO Pants VALUES (2, "Men's Jeans", "Black", 15.99, 17, 2);
+INSERT INTO Pants VALUES (3, "Men's Jeans", "Blue", 15.99, 14, 2);
+INSERT INTO Pants VALUES (4, "Women's Jeans", "Blue", 15.99, 5, 4);
+INSERT INTO Pants VALUES (5, "Women's Jeans", "Black", 15.99, 17, 4);
+INSERT INTO Pants VALUES (6, "Women's Pants", "Floral", 11.99, 19, 4);
+
+CREATE TABLE Accessories (ID INTEGER PRIMARY KEY, Description TEXT, Color TEXT, Price INTEGER, Quantity INTEGER, Aisle INTEGER);
+
+INSERT INTO Accessories VALUES (1, "Men's Watches", "Silver", 27.99, 10, 5);
+INSERT INTO Accessories VALUES (2, "Women's Watches", "Silver", 27.99, 7, 5);
+INSERT INTO Accessories VALUES (3, "Men's Sunglasses", "Black", 17.99, 4, 5);
+INSERT INTO Accessories VALUES (4, "Women's Sunglasses", "Black", 17.99, 8, 5);
+INSERT INTO Accessories VALUES (5, "Women's Bracelets", "Silver", 6.99, 14, 5);
+INSERT INTO Accessories VALUES (6, "Women's Earings", "Silver", 4.99, 10, 5);
+INSERT INTO Accessories VALUES (7, "Men's Watches", "Gold", 27.99, 3, 5);
+INSERT INTO Accessories VALUES (8, "Women's Watches", "Gold", 27.99, 5, 5);
+INSERT INTO Accessories VALUES (9, "Women's Bracelets", "Gold", 6.99, 7, 5);
+INSERT INTO Accessories VALUES (10, "Women's Earings", "Gold", 4.99, 13, 5);
+
+CREATE TABLE Outerwear (ID INTEGER PRIMARY KEY, Description TEXT, Color TEXT, Price INTEGER, Quantity INTEGER, Aisle INTEGER);
+
+INSERT INTO Outerwear VALUES (1, "Men's Sweater", "Grey", 11.99, 16, 6);
+INSERT INTO Outerwear VALUES (2, "Men's Jacket", "Black", 15.99, 19, 6);
+INSERT INTO Outerwear VALUES (3, "Men's Sweater", "Blue", 11.99, 14, 6);
+INSERT INTO Outerwear VALUES (4, "Women's Sweater", "Blue", 11.99, 17, 6);
+INSERT INTO Outerwear VALUES (5, "Women's Jacket", "Black", 15.99, 9, 6);
+INSERT INTO Outerwear VALUES (6, "Women's Jacket", "Purple", 14.99, 7, 6);
+
+CREATE TABLE Kids (ID INTEGER PRIMARY KEY, Description TEXT, Color TEXT, Price INTEGER, Quantity INTEGER, Aisle INTEGER);
+
+INSERT INTO Kids VALUES (1, "Shirt", "Dinosaur", 5.99, 13, 7);
+INSERT INTO Kids VALUES (2, "Shirt", "Lego", 5.99, 11, 7);
+INSERT INTO Kids VALUES (3, "Sweater", "Blue", 7.99, 14, 7);
+INSERT INTO Kids VALUES (4, "Pants", "Blue", 6.99, 13, 7);
+INSERT INTO Kids VALUES (5, "Pants", "Purple", 6.99, 10, 7);
+INSERT INTO Kids VALUES (6, "Jacket", "Black", 8.99, 19, 7);
+
+/** Selects all columns from Short_Sleeve table where quantity is less than 10 and listed by price **/
+SELECT * FROM Short_Sleeve WHERE Quantity < 10 ORDER BY Price;
+
+/** Selects all columns from Accessories table where quantity is less than 15 andlisted by price **/
+SELECT * FROM Accessories WHERE Quantity < 15 ORDER BY Price;
+
+/** Selects all columns from Kids table and organizes by quantity **/
+SELECT * FROM Kids ORDER BY Quantity;
+
+/** Selects all columns from Outerwear table and organizes by price **/
+SELECT * FROM Outerwear ORDER BY Price;
+
+/** Selects color column from Outerwear table and shows total of specific colors **/
+SELECT Color, SUM(Quantity) FROM Outerwear GROUP BY Color;
+
+/** Shows average price of Accessories **/
+SELECT AVG (Price) FROM Accessories;
+
+/** Shows average price of Outerwear **/
+SELECT AVG (Price) FROM Outerwear;
