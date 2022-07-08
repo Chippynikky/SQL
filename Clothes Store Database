@@ -1,4 +1,4 @@
-/** All Tables contain (ID, Description, Color, Price, Quantity, Aisle)**/ 
+/* All Tables contain (ID, Description, Color, Price, Quantity, Aisle) */ 
 
 CREATE TABLE Short_Sleeve (ID INTEGER PRIMARY KEY, Description TEXT, Color TEXT, Price INTEGER, Quantity INTEGER, Aisle INTEGER);
 
@@ -58,23 +58,23 @@ INSERT INTO Kids VALUES (4, "Pants", "Blue", 6.99, 13, 7);
 INSERT INTO Kids VALUES (5, "Pants", "Purple", 6.99, 10, 7);
 INSERT INTO Kids VALUES (6, "Jacket", "Black", 8.99, 19, 7);
 
-/** Selects all columns from Short_Sleeve table where quantity is less than 10 and listed by price **/
+/* Selects all columns from Short_Sleeve table where quantity is less than 10 and listed by price */
 SELECT * FROM Short_Sleeve WHERE Quantity < 10 ORDER BY Price;
 
-/** Selects all columns from Accessories table where quantity is less than 15 andlisted by price **/
+/* Selects all columns from Accessories table where quantity is less than 15 andlisted by price */
 SELECT * FROM Accessories WHERE Quantity < 15 ORDER BY Price;
 
-/** Selects all columns from Kids table and organizes by quantity **/
+/* Selects all columns from Kids table and organizes by quantity */
 SELECT * FROM Kids ORDER BY Quantity;
 
-/** Selects all columns from Outerwear table and organizes by price **/
+/* Selects all columns from Outerwear table and organizes by price */
 SELECT * FROM Outerwear ORDER BY Price;
 
-/** Selects color column from Outerwear table and shows total of specific colors **/
+/* Selects color column from Outerwear table and shows total of specific colors */
 SELECT Color, SUM(Quantity) FROM Outerwear GROUP BY Color;
 
-/** Shows average price of Accessories **/
+/* Shows average price of Accessories */
 SELECT AVG (Price) FROM Accessories;
 
-/** Shows average price of Outerwear **/
+/* Shows average price of Outerwear */
 SELECT AVG (Price) FROM Outerwear;
