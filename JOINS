@@ -1,0 +1,54 @@
+/* In this project, I created various tables involving movie stars and their information. I have also used queries that use JOIN*/
+
+/* Table of actor names and their age */
+CREATE TABLE stars (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);
+
+INSERT INTO stars (Name, Age) VALUES ("Robert Downey, Jr.", 57);
+INSERT INTO stars (Name, Age) VALUES ("Scarlett Johansson", 37);
+INSERT INTO stars (Name, Age) VALUES ("Chris Evans", 41);
+INSERT INTO stars (Name, Age) VALUES ("Elizabeth Olsen", 33);
+INSERT INTO stars (Name, Age) VALUES ("Chris Hemsworth", 38);
+INSERT INTO stars (Name, Age) VALUES ("Brie Larson", 32);
+INSERT INTO stars (Name, Age) VALUES ("Tom Holland", 26);
+INSERT INTO stars (Name, Age) VALUES ("Tom Hiddleston", 41);
+INSERT INTO stars (Name, Age) VALUES ("Mark Ruffalo", 54);
+INSERT INTO stars (Name, Age) VALUES ("Jeremy Renner", 51);
+
+
+/*Table of actor's birth location */
+CREATE TABLE birth_location (ID INTEGER PRIMARY KEY AUTOINCREMENT, stars_id INTEGER, City TEXT, State TEXT, Country TEXT);
+
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (1, "Manhattan", "New York", "USA");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (2, "Manhattan", "New York", "USA");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (3, "Boston", "Massachusettes", "USA");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (4, "Sherman Oaks", "California", "USA");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (5, "Melbourne", NULL, "Austrailia");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (6, "Sacramento", "California", "USA");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (7, "Kingston upon Thames", NULL, "United Kingdom");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (8, "Westminster", NULL, "United Kingdom");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (9, "Kenosha", "Wisconsin", "USA");
+INSERT INTO birth_location (stars_id, City, State, Country) VALUES (10, "Modesto", "California", "USA");
+
+/* Table of actor's birth date */
+CREATE TABLE birth_date (ID INTEGER PRIMARY KEY AUTOINCREMENT, stars_id INTEGER, Month TEXT, Date INTEGER, Year INTEGER);
+
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (1, "April", 4, 1965);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (2, "November", 22, 1984);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (3, "June", 13, 1981);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (4, "February", 16, 1989);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (5, "August", 11, 1983);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (6, "October", 1, 1989);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (7, "June", 1, 1996);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (8, "February", 9, 1981);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (9, "November", 22, 1967);
+INSERT INTO birth_date (stars_id, Month, Date, Year) VALUES (10, "January", 7, 1971);
+
+/* Returns actor's name and their birth city */
+SELECT stars.name, birth_location.City FROM stars JOIN birth_location ON stars.id = birth_location.stars_id;
+
+/* Returns actors's name, birth year, and birth month */
+SELECT stars.name, birth_date.Year, birth_date.Month FROM stars JOIN birth_date ON stars.id = birth_date.stars_id;
+
+/* Returns actor's name, birth year, birth city, and country ( 3 separate tables). Also organizes from oldest to youngest actor */
+
+SELECT stars.name, stars.age, birth_date.Year AS "Year of Birth", birth_location.City, birth_location.Country FROM stars JOIN birth_date ON stars.id = birth_date.stars_id JOIN birth_location ON stars.id = birth_location.stars_id ORDER BY "Year of Birth";
