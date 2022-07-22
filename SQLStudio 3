@@ -1,0 +1,116 @@
+/* In this project, I am using a database that I have imported called Chinook. */
+/*This project shows my ability to join multiple tables, use aggregate functions, and use basic SQL commands */
+
+
+/* Show customers full name, customerId, and country of those not in the US*/
+SELECT FirstName, LastName, CustomerID, Country 
+FROM chinook.customers
+WHERE Country != "USA";
+
+/* Show only the customers from Brazil*/
+SELECT * FROM chinook.customers
+WHERE Country = "Brazil";
+
+/* Find invoices from Brazil customers (full name, invoice ID, date of invoice, and billing country)*/
+SELECT cust.FirstName,cust.LastName, inv.InvoiceID, inv.InvoiceDate, inv.BillingCountry
+FROM chinook.invoices AS inv
+LEFT JOIN chinook.customers AS cust
+ON inv.CustomerID = cust.CustomerID
+WHERE inv.BillingCountry = "Brazil";
+
+/*  Show the employees who are Sales agents */
+SELECT * FROM chinook.employees
+WHERE Title = "Sales Support Agent";
+
+/* Find distict list of billing countries from the invoice table */
+SELECT DISTINCT BillingCountry
+FROM chinook.invoices;
+
+/* Show invoices associated with each sales agent (JOINS 2 tables) */
+SELECT emp.FirstName AS Employee_FirstName, emp.LastName AS Employee_LastName, inv.InvoiceID
+FROM chinook.employees AS emp
+JOIN chinook.Customers AS cust
+    ON cust.SupportRepID = emp.EmployeeID
+JOIN chinook.Invoices AS inv
+    ON inv.CustomerID = cust.CustomerID;
+
+/* Show the invoice total, customer name, country, and sales agent for all invoices and customers */
+SELECT inv.total, cust.FirstName AS customer_first_name, cust.LastName AS customer_last_name, cust.Country, emp.FirstName AS employee_first_name, emp.LastName AS employee_last_name
+FROM chinook.customers AS cust
+JOIN chinook.invoices AS inv
+    ON cust.CustomerID = inv.CustomerID
+JOIN chinook.employees AS emp
+    ON emp.EmployeeID = cust.SupportRepID;
+    
+/* Alnernate answer for above query */
+    
+SELECT emp.LastName, emp.Firstname, cust.FirstName, cust.LastName, cust.Country, inv.total
+FROM chinook.employees emp 
+JOIN chinook.Customers cust ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv ON Inv.CustomerId = cust.CustomerId;
+
+/* How many invoices were there in 2009 */
+SELECT COUNT (*) AS Number_of_Invoices
+FROM chinook.invoices
+WHERE InvoiceDate
+BETWEEN "2009-01-01" AND "2009-12-31";
+
+/* What are the total sales for 2009 */
+SELECT ROUND(SUM (Total),2) AS Total_Sales
+FROM chinook.invoices
+WHERE Invoicedate
+BETWEEN "2009-01-01" AND "2009-12-31";
+
+/* Show purchased track name with each invoice line item */
+SELECT trk.Name, items.InvoiceLineID
+FROM chinook.tracks AS trk
+JOIN chinook.invoice_items AS items
+    ON trk.TrackID = items.TrackID;
+    
+/* Show all the tracks, and include album name, media type and genre */
+SELECT trk.Name AS Track_Name, albm.Title AS Album_Title, med.Name AS Media_Type, gen.Name AS Genre
+FROM chinook.tracks AS trk
+JOIN chinook.albums AS albm
+    ON albm.AlbumID = trk.AlbumID
+JOIN chinook.media_types AS med
+    ON med.MediaTypeID = trk.MediaTypeID
+JOIN chinook.genres AS gen
+    ON gen.GenreID = trk.GenreID
+ORDER BY Album_Title;
+
+/* Total Sales made by each sales agent */
+SELECT emp.FirstName, emp.LastName, ROUND (SUM (inv.Total),2) AS Total_Sales
+FROM chinook.employees AS emp
+JOIN chinook.customers as cust
+    ON cust.SupportRepID = emp.EmployeeID
+JOIN chinook.invoices AS inv
+    ON inv.CustomerId = cust.CustomerId
+WHERE emp.Title = "Sales Support Agent"
+GROUP BY emp.FirstName;
+ 
+/* Which Sales agent made the most in sales in 2009 */
+SELECT emp.FirstName, emp.LastName, ROUND (SUM (inv.Total),2) AS Total_Sales
+FROM chinook.employees AS emp
+JOIN chinook.customers as cust
+    ON cust.SupportRepID = emp.EmployeeID
+JOIN chinook.invoices AS inv
+    ON inv.CustomerId = cust.CustomerId
+WHERE emp.Title = "Sales Support Agent"
+    AND inv.InvoiceDate LIKE '2009%'
+GROUP BY emp.FirstName
+ORDER BY Total_Sales desc LIMIT 1;
+
+/* Which country had the most number of customers */
+SELECT COUNT (Country) AS Number_of_Customers, country
+FROM chinook.customers
+GROUP BY Country
+ORDER BY Number_of_Customers desc LIMIT 1;
+
+/* Which tracks were bought in the USA */
+SELECT trk.Name
+FROM chinook.invoice_items as items
+JOIN chinook.invoices as inv
+    ON items.InvoiceId = inv.InvoiceId
+JOIN chinook.tracks as trk
+    ON trk.TrackId = items.TrackId
+Where BillingCountry = "USA";
