@@ -1,0 +1,59 @@
+/* This projects contains MySQL statements used to answer HackerRack's SQL preparation - Joins tasks */
+
+/* Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'. */
+SELECT SUM(city.population)
+FROM CITY 
+JOIN COUNTRY
+ON CITY.countrycode = COUNTRY.code
+WHERE COUNTRY.CONTINENT = 'Asia';
+
+
+/* Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa' */
+SELECT CITY.name
+FROM CITY
+JOIN COUNTRY
+ON CITY.countrycode = COUNTRY.code
+WHERE COUNTRY.continent = 'Africa';
+
+
+/* Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) 
+and their respective average city populations (CITY.Population) rounded down to the nearest integer. */
+SELECT COUNTRY.continent, FLOOR(AVG(CITY.population))
+FROM COUNTRY
+JOIN CITY
+ON COUNTRY.code = CITY.countrycode
+GROUP BY COUNTRY.continent
+ORDER BY COUNTRY.continent;
+
+
+/* You are given two tables: Students and Grades. Students contains three columns ID, Name and Marks.
+Generate report, in descending order, that does not contain names of those who received lower than 8 */
+SELECT IF (grade < 8 , NULL, Name)
+, Grade
+, Marks
+FROM STUDENTS 
+JOIN GRADES
+WHERE STUDENTS.marks BETWEEN Min_Mark AND Max_Mark
+ORDER BY Grade desc, Name;
+
+
+/* Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge.
+Order your output in descending order by the total number of challenges in which the hacker earned a full score.
+If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id. */
+SELECT H.hacker_id
+, H.name
+FROM SUBMISSIONS S
+INNER JOIN CHALLENGES C
+    ON S.challenge_id = C.challenge_id
+INNER JOIN DIFFICULTY D
+    ON C.difficulty_level = D.difficulty_level 
+INNER JOIN HACKERS H
+    ON S.hacker_id = H.hacker_id
+WHERE S.score = D.score
+    AND C.difficulty_level = D.difficulty_level
+GROUP BY H.hacker_id, H.name
+HAVING COUNT(S.hacker_id) > 1
+ORDER BY COUNT(S.hacker_id) desc, S.hacker_id asc;
+
+
+
